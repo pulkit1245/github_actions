@@ -15,9 +15,10 @@ jobs:
         steps:
             - name: Failed step
             # | this command will help you execute more than one command in one step 
-            
+
               run:  |
                     echo "This step will fail"
-                    exit 1
+                    exit 0
+            #if any step fail then all the steps below also will not execute 
             - name: Say goodbye
               run: echo "Goodbye, world!"
