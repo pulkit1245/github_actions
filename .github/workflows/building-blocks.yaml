@@ -1,6 +1,7 @@
 name: Building Blocks
 
 on: 
+    #this will not automatically run the pipeline , you manually have to run the 
     workflow_dispatch: 
 
 # here jobs run parellel it will create a new vm for every job 
