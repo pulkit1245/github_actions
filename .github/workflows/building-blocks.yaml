@@ -1,6 +1,7 @@
 name: Building Blocks
 
-on: push 
+on: 
+    workflow_dispatch: 
 
 # here jobs run parellel it will create a new vm for every job 
 # here all steps run sequentially 
