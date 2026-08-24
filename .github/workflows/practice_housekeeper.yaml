@@ -1,0 +1,22 @@
+name: The nightly housekeeper
+
+on:
+    schedule:
+        - cron: '0 2 * * *'
+    workflow_dispatch:
+
+jobs:
+    cleanup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show current date and time 
+              run: |
+                echo "The current date is" 
+                #run date command is used to print the current date and time 
+                date
+                echo "Running nightly cleanup"
+            
+            - name: Finishing workflow
+              run: echo "Housekeeping complete"
+            
+            
