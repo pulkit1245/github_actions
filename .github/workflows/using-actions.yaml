@@ -1,0 +1,27 @@
+name: Actions 
+
+on:
+    # push 
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest 
+        defaults:
+            run:
+                #because we want to run npm commands in the react-app directory 
+                working-directory: react-app
+        steps:
+            - name: Checkout Code
+            #to clone the repository on the vm 
+              uses: actions/checkout@v7 
+            - name: Setup Node 
+            #to download node on the vm
+              uses: actions/setup-node@v7
+              with:
+                node-version: '24.x'
+            #this npm ci is use to install the dependecies 
+            - name: Install Dependencies
+              run: npm ci 
+            - name: Run Unit Tests
+              run: npm run test
