@@ -12,7 +12,7 @@ on:
         #* * * * * 
         #first * -> every min , second * -> hour , third * -> day of the month 
         #fourth * -> month , fifth * -> day of the week like( SUN , MON , OR 6 , 5 , etc);
-        - cron: '49 11 * * *'
+        - cron: '21 6 * * *'
     #run workflow manually 
     workflow_dispatch:
 
