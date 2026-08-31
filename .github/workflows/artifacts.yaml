@@ -1,0 +1,68 @@
+name: Working with Artifacts
+
+on:
+  workflow_dispatch:
+
+
+#environment variable 
+env:
+  build-artifact-key: app-${{ github.sha }}
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    #default working directory specified
+    defaults:
+      run:
+        working-directory: react-app
+    steps:
+      #repo cloned
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+
+      #caching 
+      - name: Download cached dependencies
+        uses: actions/cache@v6
+        id: cache
+        with:
+        #here we defined the path of the folder which we wanted to cached
+          path: react-app/node_modules
+        #key for each file generated using hash
+
+          key: deps-node-modules-${{ hashFiles('react-app/package-lock.json') }}
+
+  #if there is no change in the package.json then this hash
+      #value comes same every time 
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Unit tests
+        run: npm run test
+      - name: Build code
+        run: npm run build
+      - name: Upload build files
+      #it makes a artifact of the build folder 
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.build-artifact-key }}
+          path: react-app/build
+  deploy:
+    runs-on: ubuntu-latest
+
+    #we don't want jobs to run parallel that's why we specified needs
+
+    needs: test-build
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ env.build-artifact-key }}
+          path: build
+      - name: Show folder structure
+      #-R -> recursive 
+        run: ls -R

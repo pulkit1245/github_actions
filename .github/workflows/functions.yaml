@@ -1,5 +1,6 @@
 name: 08 - Built-in Functions Demo
 
+#> this is used to print multiple diff line combinely 
 run-name: >
   Functions |
   file=${{ inputs.filename || 'no-file' }} |
@@ -117,6 +118,7 @@ jobs:
   decision:
     runs-on: ubuntu-latest
 
+    #it will till these three jobs will complete then after that this job will execute 
     needs:
       - string-functions
       - condition-functions
